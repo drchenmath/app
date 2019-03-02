@@ -1,9 +1,41 @@
 <header>
-  <h1>Todo List</h1>
+  <login-buttons></login-buttons>
+  <h1>Dr. Chen Math</h1>
 </header>
- 
+
+<div>
+  Dr. Chen Math provides tutoring for various standard tests including SAT/ACT math, ISEE/SSAT math, SAT Math Subject, AP Calculus, AP Physics and AP Computer.
+
+  Tutoring will be held individually, online or in small groups.
+
+  Please email mchen@DrChenMath.com, or call (978)394-8991 for details.
+</div>
+<div  ng-show="$ctrl.currentUser">
+<h2>Todo List ( {{$ctrl.incompleteCount}} )</h2>
+<label class="hide-completed">
+  <input type="checkbox" ng-model="$ctrl.hideCompleted"/>
+  Hide Completed Tasks
+</label>
+
+
+<form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask)"  ng-show="$ctrl.currentUser">
+  <input ng-model="$ctrl.newTask" type="text" name="text" placeholder="Type to add new tasks"/>
+</form>
+
 <ul>
-  <li ng-repeat="task in $ctrl.tasks">
-    {{task.text}}
+  <li ng-repeat="task in $ctrl.tasks" ng-class="{'checked': task.checked, 'private': task.private}">
+    <button class="delete" ng-click="$ctrl.removeTask(task)">&times;</button>
+
+    <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(task)" class="toggle-checked"/>
+
+    <span class="text">
+      <strong>{{task.email}}</strong> - {{task.text}}
+    </span>
+
+    <button class="toggle-private" ng-click="$ctrl.setPrivate(task)" ng-show="task.owner === $ctrl.currentUser._id">
+      {{task.private == true ? "Private" : "Public"}}
+    </button>
+
   </li>
 </ul>
+</div>
